@@ -24,6 +24,7 @@ interface EmailStore {
   error: string | null;
   categorizing: boolean;
   categorizationProgress: { processed: number; total: number } | null;
+  loginTrigger: boolean;
   
   // Email management
   setEmails: (emails: Email[]) => void;
@@ -51,6 +52,8 @@ interface EmailStore {
   
   // Persistence
   initializeFromStorage: () => void;
+
+   setLoginTrigger: (trigger: boolean) => void;
 }
 
 export const useEmailStore = create<EmailStore>((set, get) => ({
@@ -61,6 +64,7 @@ export const useEmailStore = create<EmailStore>((set, get) => ({
   error: null,
   categorizing: false,
   categorizationProgress: null,
+  loginTrigger: false,
 
   setEmails: (emails) => {
     set({ emails });
@@ -274,5 +278,6 @@ export const useEmailStore = create<EmailStore>((set, get) => ({
     } catch (error) {
       console.error('Error initializing from storage:', error);
     }
-  }
+  },
+  setLoginTrigger: (trigger) => set({ loginTrigger: trigger })
 }));
