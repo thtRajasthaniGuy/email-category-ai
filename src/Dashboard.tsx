@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { EmailList } from "./components/EmailList";
-import GoogleLogin from "./components/GoogleLogin";
 import { useEmailStore } from "./store/useEmailStore";
 import { addToast, ToastContainer } from './utils/Toast';
 
@@ -9,27 +8,33 @@ export default function App() {
     emails, 
     loading,
     getAllCategories, 
-    categorizeEmails
+    categorizeEmails,
+    logout,
+    fetchEmails
   } = useEmailStore();
   
   const [activeFilter, setActiveFilter] = useState('All');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   
   // Auto-categorize emails when they're first loaded
-  useEffect(() => {
-    if (emails.length > 0) {
-      const uncategorizedCount = emails.filter(email => 
-        !email.category || email.category === 'uncategorized'
-      ).length;
-      
-      if (uncategorizedCount > 0) {
-        // Small delay to ensure UI is ready
-        setTimeout(() => {
-          handleCategorizeEmails();
-        }, 500);
-      }
+  
+useEffect(() => {
+  if (emails.length > 0) {
+    const uncategorizedCount = emails.filter(
+      email => !email.category || email.category === "uncategorized"
+    ).length;
+
+    if (uncategorizedCount > 0) {
+      setTimeout(() => {
+        categorizeEmails();   // ✅ call store action
+      }, 500);
     }
-  }, [emails.length]);
+  }
+}, [emails.length, categorizeEmails]);
+
+  useEffect(() => {
+  fetchEmails(); // load first batch on login
+}, []);
   
   const categories = getAllCategories();
 
@@ -102,6 +107,14 @@ export default function App() {
                     </div>
                   )}
                 </div>
+                <div className="ml-auto">
+        <button
+          onClick={logout}
+          className="text-sm px-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600"
+        >
+          Logout
+        </button>
+      </div>
               </div>
 
               {/* Enhanced Processing indicator */}
@@ -116,9 +129,9 @@ export default function App() {
             </div>
 
             {/* Enhanced Google Login */}
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <GoogleLogin />
-            </div>
+            </div> */}
           </div>
         </div>
       </header>
