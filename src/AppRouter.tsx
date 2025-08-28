@@ -1,37 +1,6 @@
-// import { useState, useEffect } from 'react';
-// import { useEmailStore } from './store/useEmailStore';
-// import App from './App';
-// import LandingPage from './components/LandingPage';
-
-// export default function AppRouter() {
-//   const { isAuthenticated, initializeFromStorage } = useEmailStore();
-//   const [isInitialized, setIsInitialized] = useState(false);
-  
-//   // Initialize from storage on app start
-//   useEffect(() => {
-//     initializeFromStorage();
-//     setIsInitialized(true);
-//   }, [initializeFromStorage]);
-  
-//   // Show loading during initialization
-//   if (!isInitialized) {
-//     return (
-//       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-//         <div className="text-center">
-//           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-//           <p className="text-gray-600">Loading application...</p>
-//         </div>
-//       </div>
-//     );
-//   }
-  
-//   // Route based on authentication status
-//   return isAuthenticated ? <App /> : <LandingPage />;
-// }
-
 import { useState, useEffect } from 'react';
 import { useEmailStore } from './store/useEmailStore';
-import App from './App';
+import Dashboard from './Dashboard';
 import LandingPage from './components/LandingPage';
 import GoogleLogin from './components/GoogleLogin'; // Add this import
 
@@ -59,7 +28,7 @@ export default function AppRouter() {
   
   // If authenticated, show the app
   if (isAuthenticated) {
-    return <App />;
+    return <Dashboard />;
   }
   
   // If not authenticated, show landing page
@@ -86,7 +55,8 @@ export default function AppRouter() {
             </div>
             
             <div className="flex justify-center">
-              <GoogleLogin />
+              <GoogleLogin
+               />
             </div>
           </div>
         </div>
