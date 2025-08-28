@@ -177,7 +177,7 @@ useEffect(() => {
 
             {/* Enhanced Category List */}
             <div className="flex-1 overflow-y-auto p-3 space-y-1">
-              {categories.map((category, index) => {
+              {categories.map((category) => {
                 const isActive = activeFilter === category;
                 const emailCount = getCategoryStats(category);
                 

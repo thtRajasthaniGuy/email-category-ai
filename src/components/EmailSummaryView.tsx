@@ -7,7 +7,7 @@ interface EmailSummaryViewProps {
   summarizeEmailFn: (content: string) => Promise<EmailSummary>;
 }
 
-export function EmailSummaryView({ emailId, emailContent, summarizeEmailFn }: EmailSummaryViewProps) {
+export function EmailSummaryView({ emailContent, summarizeEmailFn }: EmailSummaryViewProps) {
   const [summaryData, setSummaryData] = useState<EmailSummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [showFull, setShowFull] = useState(false);
